@@ -1,0 +1,9 @@
+ansibleclient1	ansible_host=192.168.174.146	ansible_user=ansibleclient1	ansible_private_key_file=~/.ssh/id_rsa
+ansibleclient2	ansible_host=192.168.174.147
+[group_hosts]
+ansibleclient2
+[group_hosts:vars]
+ansible_connection=ssh
+ansible_user=ansibleclient2
+ansible_private_key_file=~/.ssh/id_rsa
+

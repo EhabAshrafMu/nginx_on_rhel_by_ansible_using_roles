@@ -1,0 +1,30 @@
+---
+# tasks file for roles/nginx-deployment-role
+- name: Allow HTTP service in firewalld
+  ansible.posix.firewalld:
+    service: http
+    permanent: true
+    state: enabled
+    immediate: yes
+
+- name: Install nginx #installing nginx e using the builtin module of ansible. Yum because we are in a rhel environment. Apt for debian.
+  ansible.builtin.yum:
+    name: nginx #the name of the nginx server in rhel.
+    state: present #it means if it's availablee on the server, don't install. If it's not avaialbe, it will install the latest.
+    update_cache: yes # update the repo chache
+
+- name: Deploy nginx config template #use the jinja2 template to write the configuration file for nginx.
+  ansible.builtin.template:
+    src: nginx.conf.j2 #the configuration will be written in this file in the same directory we are standing.
+    dest: /etc/nginx/conf.d/custom.conf #the path that it will be copied to. This is the path for nginx configuration
+    mode: '0644' #give the owner read and write perms. group and others readonly.
+    owner: root #make sure the owner of the file is root and the group is root
+    group: root
+    notify: Restart nginx #after doing the above commands, restart the nginx server. It will be referred to later.
+
+- name: Start and enable nginx #use the service module to start and enable the nginx server.
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+

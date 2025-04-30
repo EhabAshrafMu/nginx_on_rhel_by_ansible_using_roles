@@ -1,0 +1,7 @@
+---
+
+- name: Deploy nginx web server with some IP restrections
+  hosts: ansibleclient1 #The webservers specified in the hosts file
+  become: yes #allow ansible to become root while excution
+  roles:
+    - nginx-deployment-role

@@ -1,0 +1,8 @@
+---
+# vars file for roles/nginx-deployment-role
+
+nginx_document_root_directory: /usr/share/nginx/html #the root dir for nginx on rhel
+nginx_server_name: webserver.local
+allowed_ips: #list of the allowed ip. Take care of the name of the variable here. It will be used later in nginx.conf.j2
+ - 192.168.174.147
+ - 192.168.174.148

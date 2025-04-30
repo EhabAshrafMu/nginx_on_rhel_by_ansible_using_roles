@@ -1,0 +1,14 @@
+server {
+	listen 80;
+	server_name {{ nginx_server_name }};
+	root {{ nginx_document_root_directory }};
+	
+	location / {
+		# ALlow access from specified IPs
+		{% for ip in allowed_ips %}
+		allow {{ ip }}; 
+		{% endfor %}
+		# deny other access
+		deny all;
+	}	
+}
